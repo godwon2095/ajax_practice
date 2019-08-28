@@ -1,0 +1,9 @@
+<li class="list-group-item">
+    <p>
+        <b>{{ review.user.username }}</b>
+        {% if user == review.user %}
+            <a href="{% url 'items:delete_review' review.id %}" class="right">삭제</a>
+        {% endif %}
+    </p>
+    <p>{{ review.body }}</p>
+</li>

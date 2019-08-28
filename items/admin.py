@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Item, Like
+from .models import Item, Like, Review
 
 admin.site.site_header = "Ajax Practice"
 admin.site.site_title = "Ajax Practice"
@@ -18,9 +18,9 @@ class ItemAdmin(admin.ModelAdmin):
     )
 
     list_display = (
+        'name',
         'pk',
         'image',
-        'name',
         'price',
         'created_at',
         'updated_at',
@@ -46,6 +46,18 @@ class LikeAdmin(admin.ModelAdmin):
         'pk',
         'item',
         'user',
+        'created_at',
+        'updated_at',
+    )
+
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = (
+        'body',
+        'user',
+        'item',
         'created_at',
         'updated_at',
     )

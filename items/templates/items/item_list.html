@@ -1,20 +1,30 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/item_list.css' %}">
+{% endblock css %}
 
 {% block content %}
     <div class="container">
-        {% for item in items %}
-            <div class="card" style="width: 18rem;">
-                {% if item.image %}
-                    <img src="{{ item.image.url }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ item.name }}</h5>
-                        <p class="card-text">{{ item.price }}</p>
-                        <a href="#" class="btn btn-primary">보러가기</a>
+        <div class="row">
+            {% for item in items %}
+                <div class="col-md-3 col-6 item_list__card">
+                    <div class="card">
+                        {% if item.image %}
+                            <a href="{% url 'items:show' item.pk %}">
+                                <img src="{{ item.image.url }}" class="card-img-top" alt="...">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ item.name }}</h5>
+                                <p class="card-text">{{ item.price|intcomma }}원</p>
+                                <a href="{% url 'items:show' item.pk %}" class="btn btn-outline-primary">보러가기</a>
+                            </div>
+                        {% endif %}
                     </div>
-                {% endif %}
-            </div>
-        {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}

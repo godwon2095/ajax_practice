@@ -1,0 +1,31 @@
+.navbar {
+    background-color: #391686;
+}
+
+.navbar-brand {
+    color: white !important;
+}
+
+.nav-link {
+    color: white !important;
+}
+
+.container {
+    margin-top: 80px;
+    margin-bottom: 200px;
+}
+
+.btn-primary {
+    background-color: #391686;
+    border-color: #391686;
+}
+
+.btn-outline-primary {
+    border-color: #391686;
+    color: #391686;
+}
+
+.btn-outline-primary:hover {
+    border-color: #391686;
+    background-color: #391686;
+}
