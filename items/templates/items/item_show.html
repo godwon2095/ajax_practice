@@ -18,7 +18,7 @@
             <p class="item_show__item_price">{{ item.price|intcomma }}원</p>
             <p class="item_show__item_description">{{ item.description }}</p>
         </div>
-        <a id="like-button" data-item-id="{{ item.id }}">
+        <a href="{% url 'items:like_toggle' item.id %}">
             {% if request.user in item.liked_users.all %}
                 <i class="icon ion-ios-heart"></i>
             {% else %}
@@ -44,23 +44,3 @@
 
     </div>
 {% endblock content %}
-     
-{% block js %}
-<script>
-    $('#like-button').click(function(e){
-        e.preventDefault();
-        const itemId = $(this).data('item-id');
-        $.ajax({
-            url: `/items/${itemId}/like_toggle/`,
-            type: "POST",
-            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
-            success: function(response){
-                console.log(response);
-            },
-            error: function(response){
-
-            }
-        });
-    })
-</script>
-{% endblock %}

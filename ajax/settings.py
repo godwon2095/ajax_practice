@@ -137,7 +137,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 
-LOGIN_REDIRECT_URL = 'basic'
+LOGIN_REDIRECT_URL = 'root_page'
 
 LOGIN_URL = 'account_login'
 
