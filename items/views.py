@@ -4,8 +4,8 @@ from .models import Item, Like, Review
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
-# from django.http import HttpResponse
-# import json
+from django.http import HttpResponse
+import json
 
 
 def item_list(request):
@@ -25,16 +25,22 @@ def item_show(request, item_id):
 
 
 @login_required
-# @require_POST
+@require_POST
 def like_toggle(request, item_id):
     item = get_object_or_404(Item, pk=item_id)
     item_like, item_like_created = Like.objects.get_or_create(user=request.user, item=item)
 
     if not item_like_created:
         item_like.delete()
+        result = 'heart-empty'
+    else:
+        result = 'heart'
 
-    return redirect('items:show', item.id)
-    # return HttpResponse(json.dumps(context), content_type="application/json")
+    context = {
+        'result': result
+    }
+
+    return HttpResponse(json.dumps(context), content_type="application/json")
 
 
 @login_required

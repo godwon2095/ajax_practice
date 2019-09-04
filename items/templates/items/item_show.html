@@ -10,7 +10,7 @@
 {% block content %}
     <div class="container">
         {% if item.image %}
-            <img src="{{ item.image.url }}" class="img-fluid" alt="Responsive image">
+            <img src="{{ item.image.url }}" id="item-show-image" class="img-fluid" alt="Responsive image">
         {% endif %}
         <br>
         <div class="item_show__item_infos">
@@ -18,18 +18,18 @@
             <p class="item_show__item_price">{{ item.price|intcomma }}원</p>
             <p class="item_show__item_description">{{ item.description }}</p>
         </div>
-        <a href="{% url 'items:like_toggle' item.id %}">
+        <a id="like-button" data-item-id="{{ item.id }}">
             {% if request.user in item.liked_users.all %}
-                <i class="icon ion-ios-heart"></i>
+                <i id="heart-icon" class="icon ion-ios-heart"></i>
             {% else %}
-                <i class="icon ion-ios-heart-empty"></i>
+                <i id="heart-icon" class="icon ion-ios-heart-empty"></i>
             {% endif %}
         </a>
 
         <form action="{% url 'items:create_review' item.id %}" method="POST" style="margin-top: 50px;">
         {% csrf_token %}
             <div class="form-group">
-                <textarea class="form-control" name="body" placeholder="리뷰 달기..."></textarea>
+                <textarea id="review-input" class="form-control" name="body" placeholder="리뷰 달기..."></textarea>
             </div>
             <button type="submit" class="btn btn-primary right">작성</button>
         </form><br>
@@ -44,3 +44,23 @@
 
     </div>
 {% endblock content %}
+
+{% block js %}
+<script>
+    $('#like-button').on('click', function(){
+        const likeButton = $(this);
+        const itemId = likeButton.data('item-id');
+        $.ajax({
+            url: `/items/${itemId}/like_toggle/`,
+            type: 'POST',
+            data: {'csrfmiddlewaretoken' : "{{ csrf_token }}"},
+            success: function(response){
+                $('#heart-icon').attr('class', `icon ion-ios-${response.result}`);
+            },
+            error: function(response){
+
+            }
+        });
+    });
+</script>
+{% endblock js %}
