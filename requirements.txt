@@ -1,4 +1,4 @@
-Django==2.0.13
+Django==2.2.10
 django-allauth==0.39.1
 django-appconf==1.0.3
 django-coverage-plugin==1.6.0
